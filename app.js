@@ -41,7 +41,7 @@ function fbAuthStateChange(callback) {
 // ====== TILGANGSKONTROLL ======
 async function checkUserAccess(userEmail) {
   try {
-    const accessDoc = doc(firestore, 'timepk', 'access');
+    const accessDoc = doc(firestore, 'weaponlog', 'access');
     const docSnap = await getDoc(accessDoc);
     
     if (docSnap.exists()) {
