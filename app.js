@@ -285,8 +285,6 @@ function setupAuthUI() {
   });
 }
 
-document.addEventListener('DOMContentLoaded', setupAuthUI);
-
 // ====== Admin: Last ned full feil/fiks-historikk (CSV) ======
 function downloadDefectRepairLog() {
   // Header for hendelseslogg
@@ -1651,6 +1649,8 @@ el.filterShootingInstructor.addEventListener('change', renderHistory);
 el.filterMember.addEventListener('change', renderHistory);
 
 // ====== First init ======
+document.addEventListener('DOMContentLoaded', setupAuthUI);
+
 (function bootstrap() {
   if (state.skyteledere.length === 0) {
     addShootingInstructor('Skyteleder');
