@@ -1,4 +1,4 @@
-# Firebase Integration Guide for TimePK WeaponLogg
+# Firebase Integration Guide for WeaponLog
 
 ## 📋 Quick Start
 
@@ -8,7 +8,7 @@ This document guides you through setting up Firebase for cloud syncing your weap
 
 1. Go to [Firebase Console](https://console.firebase.google.com)
 2. Click **"Create Project"**
-3. Enter project name: `timepk-weaponlogg`
+3. Enter project name: `weaponlog`
 4. Accept default settings, click **Create**
 5. Wait for project to initialize
 
@@ -17,7 +17,7 @@ This document guides you through setting up Firebase for cloud syncing your weap
 1. In Firebase Console, click the **gear icon** → **Project Settings**
 2. Go to **"Your apps"** section
 3. Click **Web icon** (</>)
-4. Register app with name: `TimePK WeaponLogg`
+4. Register app with name: `WeaponLog`
 5. Copy the `firebaseConfig` object (you'll need this next)
 
 ## Step 3: Configure firebase-config.js

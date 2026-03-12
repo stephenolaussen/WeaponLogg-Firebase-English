@@ -83,7 +83,7 @@ async function addUserAccess(userEmail, adminPassword) {
   }
   
   try {
-    const accessDoc = doc(firestore, 'timepk', 'access');
+    const accessDoc = doc(firestore, 'weaponlog', 'access');
     const docSnap = await getDoc(accessDoc);
     
     if (docSnap.exists()) {
@@ -111,7 +111,7 @@ async function removeUserAccess(userEmail, adminPassword) {
   }
   
   try {
-    const accessDoc = doc(firestore, 'timepk', 'access');
+    const accessDoc = doc(firestore, 'weaponlog', 'access');
     const docSnap = await getDoc(accessDoc);
     
     if (docSnap.exists()) {
@@ -135,8 +135,8 @@ async function saveToFirestore() {
   if (!isAuthenticated || !currentUser) return;
   
   try {
-    console.log('[Firestore] Lagrer felles TimePK data...');
-    const sharedDoc = doc(firestore, 'timepk', 'shared');
+    console.log('[Firestore] Lagrer felles WeaponLog data...');
+    const sharedDoc = doc(firestore, 'weaponlog', 'shared');
     
     // Hent weaponLog fra localStorage
     const weaponLog = JSON.parse(localStorage.getItem('weaponLog') || '[]');
@@ -162,8 +162,8 @@ async function loadFromFirestore() {
   if (!isAuthenticated || !currentUser) return;
   
   try {
-    console.log('[Firestore] Laster felles TimePK data...');
-    const sharedDoc = doc(firestore, 'timepk', 'shared');
+    console.log('[Firestore] Laster felles WeaponLog data...');
+    const sharedDoc = doc(firestore, 'weaponlog', 'shared');
     const docSnap = await getDoc(sharedDoc);
     
     if (docSnap.exists()) {
@@ -190,7 +190,7 @@ async function loadFromFirestore() {
       db.save(DB_KEYS.skyteledere, state.skyteledere);
       db.save(DB_KEYS.settings, state.settings);
       
-      console.log('[Firestore] 🤝 Felles TimePK data synkronisert');
+      console.log('[Firestore] 🤝 Data synkronisert fra sky');
       return true;
     } else {
       console.log('[Firestore] Ingen felles data - oppretter ny database');
@@ -315,14 +315,14 @@ function downloadDefectRepairLog() {
     });
   const csv = [header, ...rows].map(r => r.map(cell => `"${String(cell).replace(/"/g,'""')}"`).join(';')).join('\n');
   const date = new Date().toISOString().slice(0,10);
-  download(`timepk-feilfikslogg-${date}.csv`, csv, 'text/csv;charset=utf-8');
+  download(`weaponlog-feilfikslogg-${date}.csv`, csv, 'text/csv;charset=utf-8');
 }
 // Add button to download error/fix log (for example in admin panel)
 if (document.getElementById('downloadDefectLogBtn')) {
   document.getElementById('downloadDefectLogBtn').onclick = lastNedFeilFiksLogg;
 }
 // Admin password handling (only one source)
-const PASSORD_KEY = 'tpk_admin_passord';
+const PASSORD_KEY = 'wlog_admin_passord';
 function getAdminPassword() {
   return localStorage.getItem(PASSORD_KEY) || 'TimePK';
 }
@@ -578,11 +578,11 @@ function customConfirm(msg, useHTML = false) {
 const PUSS_THRESHOLD = 30; // alarmgrense: mer enn 30 treninger siden puss
 
 const DB_KEYS = {
-  medlemmer: 'tpk_medlemmer',
-  vapen: 'tpk_vapen',
-  utlaan: 'tpk_utlaan',
-  skyteledere: 'tpk_skyteledere',
-  settings: 'tpk_settings'
+  medlemmer: 'wlog_medlemmer',
+  vapen: 'wlog_vapen',
+  utlaan: 'wlog_utlaan',
+  skyteledere: 'wlog_skyteledere',
+  settings: 'wlog_settings'
 };
 
 const db = {
@@ -1465,7 +1465,7 @@ function downloadWeaponLog() {
   // Semikolon-separert CSV for norsk Excel
   const csv = [header, ...rows].map(r => r.map(cell => `"${String(cell).replace(/"/g,'""')}"`).join(';')).join('\n');
   const date = new Date().toISOString().slice(0,10);
-  download(`timepk-vapenlogg-${date}.csv`, csv, 'text/csv;charset=utf-8');
+  download(`weaponlog-vapenlogg-${date}.csv`, csv, 'text/csv;charset=utf-8');
 }
 
 // ====== UI Handlers ======
@@ -1679,7 +1679,7 @@ if ('serviceWorker' in navigator) {
       banner.style.bottom = "20px";
       banner.style.left = "50%";
       banner.style.transform = "translateX(-50%)";
-      banner.style.background = "#1E88E5"; // TimePK-blå
+      banner.style.background = "#1E88E5"; // WeaponLog-blå
       banner.style.color = "#fff";
       banner.style.padding = "0.8rem 1.2rem";
       banner.style.borderRadius = "8px";
@@ -1690,7 +1690,7 @@ if ('serviceWorker' in navigator) {
       banner.style.fontFamily = "'Segoe UI', sans-serif";
       banner.style.zIndex = "9999";
       banner.innerHTML = `
-        <span style="font-size:0.95rem;">Ny versjon av TimePK er klar</span>
+        <span style="font-size:0.95rem;">Ny versjon av WeaponLog er klar</span>
         <button id="reloadBtn" style="
           background:#fff;
           color:#1E88E5;
