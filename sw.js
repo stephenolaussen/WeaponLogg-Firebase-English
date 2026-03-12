@@ -1,4 +1,4 @@
-const CACHE_NAME = "weapon-loan-cache-v6.26"; // Update version number to force new cache
+const CACHE_NAME = "weapon-loan-cache-v1.0"; // Update version number to force new cache
 
 const ASSETS = [
   "index.html", // Switch to "timepk.html" if that's the one you use
