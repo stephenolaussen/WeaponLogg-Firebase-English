@@ -47,6 +47,20 @@ async function checkUserAccess(userEmail) {
     if (docSnap.exists()) {
       const accessData = docSnap.data();
       const allowedUsers = accessData.allowedUsers || [];
+      
+      // Hvis listen er tom, legg til første bruker
+      if (allowedUsers.length === 0) {
+        allowedUsers.push(userEmail);
+        await setDoc(accessDoc, {
+          allowedUsers,
+          createdAt: serverTimestamp(),
+          firstUserAdded: serverTimestamp()
+        });
+        console.log('[Access] Første bruker lagt til:', userEmail);
+        return true;
+      }
+      
+      // Sjekk om bruker er i listen
       return allowedUsers.includes(userEmail);
     } else {
       // First time - create access list with the current user as admin
@@ -54,6 +68,7 @@ async function checkUserAccess(userEmail) {
         allowedUsers: [userEmail],
         createdAt: serverTimestamp()
       });
+      console.log('[Access] Access-liste opprettet med:', userEmail);
       return true;
     }
   } catch (error) {
@@ -308,10 +323,10 @@ if (document.getElementById('downloadDefectLogBtn')) {
 }
 // Admin password handling (only one source)
 const PASSORD_KEY = 'tpk_admin_passord';
-function getAdminPassord() {
+function getAdminPassword() {
   return localStorage.getItem(PASSORD_KEY) || 'TimePK';
 }
-function setAdminPassord(nytt) {
+function setAdminPassword(nytt) {
   localStorage.setItem(PASSORD_KEY, nytt);
 }
 
