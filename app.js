@@ -251,7 +251,7 @@ function setupAuthUI() {
         // Ingen tilgang - logg ut
         console.log('❌ Ingen tilgang for:', user.email);
         await fbLogout();
-        alert(`Ingen tilgang for ${user.email}.\n\nKontakt administrator for å få tilgang til TimePK systemet.`);
+        alert(`Ingen tilgang for ${user.email}.\n\nKontakt administrator for å få tilgang til WeaponLog systemet.`);
       }
     } else {
       isAuthenticated = false;
