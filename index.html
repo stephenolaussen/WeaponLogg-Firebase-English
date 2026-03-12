@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Time Pistolklubb – Lånevåpen</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="custom-scrollbar.css" />
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0f172a" />
+  <link rel="icon" type="image/png" href="assets/icons/WeaponLog 192.png">
+</head>
+<body>
+  <!-- Login-skjerm (før auth) -->
+  <div id="loginScreen" style="display:flex;align-items:center;justify-content:center;height:100vh;background:var(--bg);">
+    <div style="text-align:center;padding:2rem;background:var(--panel);border-radius:12px;border:1px solid var(--border);max-width:400px;">
+      <h1 style="margin-bottom:1.5rem;font-size:24px;">Time Pistolklubb</h1>
+      <h2 style="margin-bottom:2rem;font-size:16px;color:var(--muted);">Lånevåpen</h2>
+      <button id="loginBtn" style="width:100%;padding:12px 16px;background:linear-gradient(180deg,#1d4ed8,#1e40af);border-color:#1d4ed8;border:1px solid;color:white;border-radius:10px;cursor:pointer;font-size:16px;font-weight:600;">
+        Logg inn med Google
+      </button>
+      <p style="margin-top:1rem;font-size:12px;color:var(--muted);">Bruk TimePK sin Google-konto</p>
+    </div>
+  </div>
+
+  <!-- App-innhold (etter auth) -->
+  <div id="appContainer" style="display:none;">
+    <!-- Egendefinert Ja/Nei-dialog -->
+    <div id="customConfirm" style="display:none;position:fixed;z-index:9999;left:0;top:0;width:100vw;height:100vh;background:rgba(0,0,0,0.3);align-items:center;justify-content:center;">
+      <div style="background:#222;color:#fff;padding:2rem 2.5rem;border-radius:10px;box-shadow:0 4px 24px #0008;max-width:90vw;min-width:260px;text-align:center;">
+        <div id="customConfirmMsg" style="margin-bottom:1.5rem;font-size:1.1rem;line-height:1.6;"></div>
+        <button id="customConfirmYes" style="background:#2196f3;color:#fff;padding:0.6rem 1.5rem;margin:0 1rem 0 0;border:none;border-radius:6px;font-size:1rem;">Ja</button>
+        <button id="customConfirmNo" style="background:#eee;color:#222;padding:0.6rem 1.5rem;border:none;border-radius:6px;font-size:1rem;">Nei</button>
+      </div>
+    </div>
+
+  <header class="app-header">
+    <img src="assets/icons/timepk-logo.png" alt="Time PK" class="logo" onerror="this.style.display='none'">
+    <h1>Time Pistolklubb – Lånevåpen</h1>
+    <div class="stat">
+      <span id="statBadge" class="pill ok">Ingen utleide våpen</span>
+      <span id="antallAktive">0</span> aktive utlån
+      <span id="pussAlarmBadge" class="pill alert" style="display:none">
+        Puss-alarm: <span id="pussCount">0</span>
+      </span>
+      <button id="logoutBtn" style="margin-left:auto;background:var(--surface);color:var(--danger);border:1px solid var(--border);padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px;">Logg ut</button>
+      <span id="userEmail" style="margin-left:12px;font-size:12px;color:var(--muted);"></span>
+    </div>
+  </header>
+
+  <nav class="tabs">
+    <button id="tabLoans" class="active" type="button">Utlån</button>
+    <button id="tabHistory" type="button">Historikk</button>
+  </nav>
+
+  <main id="viewLoans" class="view grid">
+  <section class="panel">
+      <h2>Skyteleder</h2>
+      <div class="row">
+        <select id="shootingInstructorSelect" title="Velg skyteleder"></select>
+        <button id="newShootingInstructorBtn" class="primary" type="button">Ny skyteleder</button>
+      </div>
+      <div class="hint">Aktiv skyteleder lagres på hvert utlån.</div>
+      <div id="adminShootingInstructorPanel" style="display:none;margin-top:1em;">
+        <button id="deleteShootingInstructorBtn" class="danger" type="button">Slett valgt skyteleder</button>
+        <span class="hint small">Velg en skyteleder og trykk Slett.</span>
+      </div>
+      <div style="margin-top:40px;">
+        <button id="adminShootingInstructorBtn" class="primary" type="button">Admin</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Medlemmer</h2>
+      <div class="row">
+        <input id="memberSearch" placeholder="Søk medlem..." />
+        <button id="newMemberBtn" class="primary" type="button">Nytt medlem</button>
+      </div>
+  <div id="membersList" class="list"></div>
+      <div id="adminMemberPanel" style="display:none;margin-top:1em;">
+        <button id="deleteMemberBtn" class="danger" type="button">Slett valgt medlem</button>
+        <span class="hint small">Velg et medlem og trykk Slett.</span>
+      </div>
+      <div style="margin-top:1.5em">
+        <button id="adminMemberBtn" class="primary" type="button">Admin</button>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2>Våpen <span id="weaponCounter" class="weapon-count">0 våpen</span></h2>
+      <div class="row">
+        <input id="weaponSearch" placeholder="Søk våpen eller serienummer..." />
+        <button id="newWeaponBtn" class="primary" type="button">Nytt våpen</button>
+      </div>
+      <div id="weaponsList" class="list"></div>
+      <div class="hint small">Våpen markert rødt har over 30 treninger siden siste puss.</div>
+    </section>
+
+    <section class="panel">
+      <h2>Aktive utlån</h2>
+      <div id="activeLoans" class="list"></div>
+  <div class="hint" style="margin-top:8px;">Når denne listen er tom: Utfør telling av våpen.</div>
+    </section>
+   <!-- Tellefunksjon -->
+<section id="weapon-count-section" style="max-width:500px;margin:2rem auto;">
+  <h2>Våpentelling <span id="tellerWeaponCounter" class="weapon-count" style="font-size:0.9em;margin-left:0.5em;">0 våpen</span></h2>
+
+  <form id="weaponForm" style="display:flex;flex-direction:column;gap:0.8rem;">
+    <label for="count">Antall våpen:</label>
+    <input type="number" id="count" name="count" min="0" required style="padding:0.5rem;border-radius:6px;border:1px solid #ccc;">
+
+    <label for="phase">Fase:</label>
+    <select id="phase" name="phase" required style="padding:0.5rem;border-radius:6px;border:1px solid #ccc;">
+      <option value="før">Før trening</option>
+      <option value="etter">Etter trening</option>
+    </select>
+
+    <label for="note">Kommentar (valgfritt):</label>
+    <textarea id="note" name="note" rows="2" style="padding:0.5rem;border-radius:6px;border:1px solid #ccc;"></textarea>
+
+    <button type="submit" style="background:#1E88E5;color:#fff;padding:0.6rem;border:none;border-radius:6px;font-weight:600;cursor:pointer;">
+      Lagre telling
+    </button>
+  </form>
+
+  <!-- Filterknapp (kun én blokk) -->
+  <div style="margin: 1rem 0;">
+    <button id="showAll" type="button" class="active">Vis alle</button>
+    <button id="showDeviations" type="button">
+      Vis kun avvik (<span id="deviationCount">0</span>)
+    </button>
+  </div>
+
+  <h3 style="margin-top:2rem;">Logg</h3>
+  <ul id="weaponLog" style="list-style:none;padding:0;"></ul>
+</section>
+
+    <section class="panel">
+      <h2>Admin</h2>
+      <div class="grid3">
+        <button id="downloadLogBtn" type="button">Last ned våpenlogg (CSV)</button>
+        <button id="downloadDefectLogBtn" type="button">Last ned feil/fiks-historikk (CSV)</button>
+      </div>
+      <div style="margin-top:1em;">
+  <button id="adminChangePasswordBtn" class="danger" type="button" style="background:#c62828;color:#fff;">Admin: Bytt passord</button>
+  <button id="adminUsersBtn" class="danger" type="button" style="background:#c62828;color:#fff;margin-left:8px;">Admin: Brukertilgang</button>
+  <button id="adminImportJsonBtn" class="danger" type="button" style="background:#c62828;color:#fff;margin-left:8px;">Admin: Importer JSON</button>
+      </div>
+      
+      <!-- JSON Import panel -->
+      <div id="adminImportJsonPanel" style="display:none;margin-top:1em;padding:1em;border:1px solid var(--border);border-radius:6px;">
+        <h3>Importer JSON</h3>
+        <p style="font-size:0.9em;color:#666;">Lime inn hele JSON-objektet fra den gamle appen:</p>
+        <textarea id="jsonImportText" placeholder='Lime inn JSON her...' rows="8" style="width:100%;margin-bottom:1em;padding:0.5rem;border-radius:6px;border:1px solid #ccc;font-family:monospace;font-size:0.85em;"></textarea>
+        <button id="jsonImportConfirmBtn" class="success" type="button">Importer</button>
+        <button id="jsonImportCancelBtn" type="button" style="background:#eee;color:#222;margin-left:8px;">Avbryt</button>
+        <div id="jsonImportStatus" style="margin-top:1em;"></div>
+      </div>
+      
+      <!-- Brukerstyring panel -->
+      <div id="adminUsersPanel" style="display:none;margin-top:1em;padding:1em;border:1px solid var(--border);border-radius:6px;">
+        <h3>Brukertilgang</h3>
+        <div style="margin-bottom:1em;">
+          <input type="email" id="newUserEmail" placeholder="E-post til ny bruker" style="margin-right:8px;padding:6px;">
+          <button id="addUserBtn" class="primary" type="button">Legg til bruker</button>
+        </div>
+        <div>
+          <h4>Autoriserte brukere:</h4>
+          <ul id="usersList" style="list-style:none;padding:0;"></ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <main id="viewHistory" class="view" style="display:none">
+    <section class="panel">
+      <h2>Historikk</h2>
+
+      <div class="filters">
+        <div class="row">
+          <input id="historySok" placeholder="Søk (medlem, våpen, serienr, skyteleder)..." />
+          <label class="check">
+            <input id="includeActive" type="checkbox" />
+            Vis aktive
+          </label>
+        </div>
+        <div class="row">
+          <select id="filterWeapon"></select>
+          <select id="filterShootingInstructor"></select>
+          <select id="filterMember"></select>
+        </div>
+      </div>
+
+      <div id="historyList" class="list"></div>
+      <div id="historyStat" class="hint" style="margin-top:8px;"></div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    Dataene lagres i skyen (Firebase). Autosync når du er online.
+    <button id="installBtn" style="display:none;position:fixed;bottom:1rem;right:1rem;padding:0.6rem 1rem;background:#0f172a;color:#fff;border:none;border-radius:6px;z-index:1000;">
+  Installer appen
+</button>
+  </footer>
+  </div>
+
+  <script type="module" src="app.js"></script>
+  <script>
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./sw.js").catch(console.error);
+    });
+  }
+  let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  document.getElementById('installBtn').style.display = 'block';
+});
+
+document.getElementById('installBtn').addEventListener('click', () => {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('App installert!');
+      }
+      deferredPrompt = null;
+      document.getElementById('installBtn').style.display = 'none';
+    });
+  }
+});
+</script>
+</body>
+</html>
+ 
