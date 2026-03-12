@@ -1,13 +1,13 @@
-# TimePK 1.30 (V6.24) - Firebase Edition
+# WeaponLog (V6.24) - Firebase Edition
 
 ## Overview
-Weaponlogg-TimePK is spesialy made for a shooting club called TimePK (Time Pistol Klubb). It is a web-based application designed to help Range Officer efficiently track and manage all of the things a Range Officer needs to manage at the firerange regarding the firearms.
+WeaponLog is spesialy made for a shooting club's. It is a web-based application designed to help Range Officer efficiently track and manage all of the things a Range Officer needs to manage at the firerange regarding the firearms.
 
 This app now features Firebase integration for multi-user access and real-time data synchronization across devices.
 
 This app features a modern user interface, offline support, cloud synchronization, and is optimized for both desktop and mobile devices.
 
-## Password TimePK You can now change the PW in the Red Admin button!
+## Password: Admin You can now change the PW in the Red Admin button!
 ## Features
  - Weapon tracking and management
  - Firebase authentication with Google Sign-In
