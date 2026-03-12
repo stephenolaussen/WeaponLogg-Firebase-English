@@ -319,7 +319,7 @@ function downloadDefectRepairLog() {
 }
 // Add button to download error/fix log (for example in admin panel)
 if (document.getElementById('downloadDefectLogBtn')) {
-  document.getElementById('downloadDefectLogBtn').onclick = lastNedFeilFiksLogg;
+  document.getElementById('downloadDefectLogBtn').onclick = downloadDefectRepairLog;
 }
 // Admin password handling (only one source)
 const PASSORD_KEY = 'wlog_admin_passord';

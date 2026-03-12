@@ -17,7 +17,16 @@ const ASSETS = [
 self.addEventListener("install", event => {
   console.log("[SW] Installing and caching files...");
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS))
+    caches.open(CACHE_NAME).then(cache => {
+      // Cache files individually and skip errors
+      return Promise.all(
+        ASSETS.map(file =>
+          cache.add(file).catch(err => {
+            console.warn(`[SW] Failed to cache ${file}:`, err);
+          })
+        )
+      );
+    })
   );
   self.skipWaiting();
 });
