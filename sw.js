@@ -1,14 +1,14 @@
 const CACHE_NAME = "weapon-loan-cache-v1.1"; // Update version number to force new cache
 
 const ASSETS = [
-  "index.html", // Switch to "timepk.html" if that's the one you use
+  "index.html", 
   "style.css",
   "app.js",
   "manifest.json",
   "offline.html",
-  "assets/icons/timepk-icon-192.png",
-  "assets/icons/timepk-icon-512.png",
-  "assets/icons/timepk-logo.png",
+  "assets/icons/weaponlog-icon-192.png",
+  "assets/icons/weaponlog-icon-512.png",
+  "assets/icons/weaponlog-logo.png",
   "assets/screenshots/screenshot-desktop.png",
   "assets/screenshots/screenshot-mobile.png"
 ];
