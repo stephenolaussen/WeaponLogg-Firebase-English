@@ -367,7 +367,7 @@ if (adminUsersBtn && adminUsersPanel) {
       // Bruker trykket Cancel
       return;
     }
-    if (password !== getAdminPassord()) {
+    if (password !== getAdminPassword()) {
       alert('Feil passord.');
       return;
     }
@@ -689,7 +689,7 @@ const el = {
 // Admin-knapp for medlem
 el.adminMedlemBtn?.addEventListener('click', () => {
   const pass = prompt('Skriv inn admin-passord:');
-  if (pass === getAdminPassord()) {
+  if (pass === getAdminPassword()) {
     el.adminMedlemPanel.style.display = '';
     el.adminMedlemPanel.dataset.admin = '1';
   } else {

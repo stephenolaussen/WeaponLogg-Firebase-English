@@ -1,4 +1,4 @@
-const CACHE_NAME = "weapon-loan-cache-v1.3"; // Update version number to force new cache
+const CACHE_NAME = "weapon-loan-cache-v1.4"; // Update version number to force new cache
 
 const ASSETS = [
   "index.html", 
