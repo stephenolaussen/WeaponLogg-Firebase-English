@@ -1,4 +1,4 @@
-const CACHE_NAME = "weapon-loan-cache-v1.4"; // Update version number to force new cache
+const CACHE_NAME = "weapon-loan-cache-v1.5"; // Update version number to force new cache
 
 const ASSETS = [
   "index.html", 
@@ -51,9 +51,12 @@ self.addEventListener("fetch", event => {
     event.respondWith(
       fetch(event.request)
         .then(response => {
-          // Cache the new version (clone before use)
+          // Cache the new version (clone before cache)
           if (response.ok) {
-            caches.open(CACHE_NAME).then(cache => cache.put(event.request, response.clone()));
+            const responseClone = response.clone();
+            caches.open(CACHE_NAME).then(cache => {
+              cache.put(event.request, responseClone);
+            });
           }
           return response;
         })
