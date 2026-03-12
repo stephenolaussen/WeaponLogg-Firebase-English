@@ -423,7 +423,7 @@ if (adminImportJsonBtn && adminImportJsonPanel) {
     if (password === null) {
       return;
     }
-    if (password !== getAdminPassord()) {
+    if (password !== getAdminPassword()) {
       alert('Feil passord.');
       return;
     }
@@ -652,12 +652,21 @@ const el = {
   tabHistorikk: document.getElementById('tabHistory'),
   viewUtlån: document.getElementById('viewLoans'),
   viewHistorikk: document.getElementById('viewHistory'),
+  tabLoans: document.getElementById('tabLoans'),
+  tabHistory: document.getElementById('tabHistory'),
+  viewLoans: document.getElementById('viewLoans'),
+  viewHistory: document.getElementById('viewHistory'),
   // skyteleder
   skytelederSelect: document.getElementById('shootingInstructorSelect'),
   nySkytelederBtn: document.getElementById('newShootingInstructorBtn'),
   adminSkytelederBtn: document.getElementById('adminShootingInstructorBtn'),
   adminSkytelederPanel: document.getElementById('adminShootingInstructorPanel'),
   slettSkytelederBtn: document.getElementById('deleteShootingInstructorBtn'),
+  shootingInstructorSelect: document.getElementById('shootingInstructorSelect'),
+  newShootingInstructorBtn: document.getElementById('newShootingInstructorBtn'),
+  adminShootingInstructorBtn: document.getElementById('adminShootingInstructorBtn'),
+  adminShootingInstructorPanel: document.getElementById('adminShootingInstructorPanel'),
+  deleteShootingInstructorBtn: document.getElementById('deleteShootingInstructorBtn'),
   // medlemmer
   medlemsListe: document.getElementById('membersList'),
   medlemSok: document.getElementById('memberSearch'),
@@ -665,16 +674,25 @@ const el = {
   adminMedlemBtn: document.getElementById('adminMemberBtn'),
   adminMedlemPanel: document.getElementById('adminMemberPanel'),
   slettMedlemBtn: document.getElementById('deleteMemberBtn'),
+  membersList: document.getElementById('membersList'),
+  memberSearch: document.getElementById('memberSearch'),
+  newMemberBtn: document.getElementById('newMemberBtn'),
   // weapons
   vapenListe: document.getElementById('weaponsList'),
   vapenSok: document.getElementById('weaponSearch'),
   nyttVapenBtn: document.getElementById('newWeaponBtn'),
   weaponCounter: document.getElementById('weaponCounter'),
   tellerWeaponCounter: document.getElementById('tellerWeaponCounter'),
+  weaponsList: document.getElementById('weaponsList'),
+  weaponSearch: document.getElementById('weaponSearch'),
+  newWeaponBtn: document.getElementById('newWeaponBtn'),
   // active loans
   aktiveUtlaan: document.getElementById('activeLoans'),
+  activeLoans: document.getElementById('activeLoans'),
   // admin
   lastNedLoggBtn: document.getElementById('downloadLogBtn'),
+  downloadLogBtn: document.getElementById('downloadLogBtn'),
+  downloadDefectLogBtn: document.getElementById('downloadDefectLogBtn'),
   // historikk
   historikkSok: document.getElementById('historySok'),
   inkluderAktive: document.getElementById('includeActive'),
@@ -682,7 +700,14 @@ const el = {
   filterSkyteleder: document.getElementById('filterShootingInstructor'),
   filterMedlem: document.getElementById('filterMember'),
   historikkListe: document.getElementById('historyList'),
-  historikkStat: document.getElementById('historyStat')
+  historikkStat: document.getElementById('historyStat'),
+  historySok: document.getElementById('historySok'),
+  includeActive: document.getElementById('includeActive'),
+  filterWeapon: document.getElementById('filterWeapon'),
+  filterShootingInstructor: document.getElementById('filterShootingInstructor'),
+  filterMember: document.getElementById('filterMember'),
+  historyList: document.getElementById('historyList'),
+  historyStat: document.getElementById('historyStat')
 };
 
 // ====== Business-logikk ======
