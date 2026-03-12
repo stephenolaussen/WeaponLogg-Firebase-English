@@ -49,12 +49,12 @@ async function checkUserAccess(userEmail) {
       const allowedUsers = accessData.allowedUsers || [];
       return allowedUsers.includes(userEmail);
     } else {
-      // First time - create access list with you as admin
+      // First time - create access list with the current user as admin
       await setDoc(accessDoc, {
-        allowedUsers: ['stephenolaussen@gmail.com'],
+        allowedUsers: [userEmail],
         createdAt: serverTimestamp()
       });
-      return userEmail === 'stephenolaussen@gmail.com';
+      return true;
     }
   } catch (error) {
     console.error('[Access] Feil ved tilgangskontroll:', error);
