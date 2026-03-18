@@ -173,11 +173,11 @@ async function loadFromFirestore() {
       }
       
       // Save to localStorage as backup (without triggering Firebase sync)
-      db.save(DB_KEYS.medlemmer, state.medlemmer);
-      db.save(DB_KEYS.vapen, state.vapen);
-      db.save(DB_KEYS.utlaan, state.utlaan);
-      db.save(DB_KEYS.skyteledere, state.skyteledere);
-      db.save(DB_KEYS.settings, state.settings);
+      localStorage_db.save(DB_KEYS.medlemmer, state.medlemmer);
+      localStorage_db.save(DB_KEYS.vapen, state.vapen);
+      localStorage_db.save(DB_KEYS.utlaan, state.utlaan);
+      localStorage_db.save(DB_KEYS.skyteledere, state.skyteledere);
+      localStorage_db.save(DB_KEYS.settings, state.settings);
       
       console.log('[Firestore] 🤝 Data synkronisert fra sky');
       return true;
@@ -572,7 +572,7 @@ const DB_KEYS = {
   settings: 'wlog_settings'
 };
 
-const db = {
+const localStorage_db = {
   load(key, fallback) {
     try {
       const raw = localStorage.getItem(key);
@@ -587,11 +587,11 @@ const db = {
 };
 
 let state = {
-  medlemmer: db.load(DB_KEYS.medlemmer, []),
-  vapen: db.load(DB_KEYS.vapen, []), // {id, navn, serienummer, totalBruk, brukSidenPuss, aktiv}
-  utlaan: db.load(DB_KEYS.utlaan, []), // {id, medlemId, vapenId, start, slutt, skytelederId}
-  skyteledere: db.load(DB_KEYS.skyteledere, []),
-  settings: db.load(DB_KEYS.settings, { aktivSkytelederId: null }),
+  medlemmer: localStorage_db.load(DB_KEYS.medlemmer, []),
+  vapen: localStorage_db.load(DB_KEYS.vapen, []), // {id, navn, serienummer, totalBruk, brukSidenPuss, aktiv}
+  utlaan: localStorage_db.load(DB_KEYS.utlaan, []), // {id, medlemId, vapenId, start, slutt, skytelederId}
+  skyteledere: localStorage_db.load(DB_KEYS.skyteledere, []),
+  settings: localStorage_db.load(DB_KEYS.settings, { aktivSkytelederId: null }),
   ui: {
     valgtMedlemId: null,
     aktivTab: 'utlaan'
@@ -607,11 +607,11 @@ function fmtDateTime(iso) {
 }
 function persist() {
   // Save to localStorage first (fast, local backup)
-  db.save(DB_KEYS.medlemmer, state.medlemmer);
-  db.save(DB_KEYS.vapen, state.vapen);
-  db.save(DB_KEYS.utlaan, state.utlaan);
-  db.save(DB_KEYS.skyteledere, state.skyteledere);
-  db.save(DB_KEYS.settings, state.settings);
+  localStorage_db.save(DB_KEYS.medlemmer, state.medlemmer);
+  localStorage_db.save(DB_KEYS.vapen, state.vapen);
+  localStorage_db.save(DB_KEYS.utlaan, state.utlaan);
+  localStorage_db.save(DB_KEYS.skyteledere, state.skyteledere);
+  localStorage_db.save(DB_KEYS.settings, state.settings);
   
   // Sync to Firebase (async, cloud backup)
   if (isAuthenticated && currentUser) {
