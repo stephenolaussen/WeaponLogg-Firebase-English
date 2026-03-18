@@ -1,0 +1,14 @@
+# Secrets and API Keys
+firebase-config.js
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Dependencies
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
