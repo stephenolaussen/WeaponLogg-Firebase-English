@@ -6,8 +6,8 @@ const ASSETS = [
   "app.js",
   "manifest.json",
   "offline.html",
-  "assets/icons/weaponlog-icon-192.png",
-  "assets/icons/weaponlog-icon-512.png",
+  "assets/icons/icon-192.png",
+  "assets/icons/icon-512.png",
   "assets/icons/weaponlog-logo.png",
   "assets/screenshots/screenshot-desktop.png",
   "assets/screenshots/screenshot-mobile.png"
