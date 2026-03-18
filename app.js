@@ -1,16 +1,7 @@
 // ====== FIREBASE INTEGRATION (TOPP) ======
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
-import { getFirestore, doc, setDoc, getDoc, collection, onSnapshot, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
-
-const firebaseConfig = {
-  apiKey: "AIzaSyBVIHNdnmY_39KXY3PKlaJ88DotXS_D934",
-  authDomain: "weaponlog-private.firebaseapp.com",
-  projectId: "weaponlog-private",
-  storageBucket: "weaponlog-private.firebasestorage.app",
-  messagingSenderId: "601806962636",
-  appId: "1:601806962636:web:23d9ad83dd203a848de769"
-};
+import { auth, db } from './firebase-config.js';
+import { GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js';
+import { doc, setDoc, getDoc, collection, onSnapshot, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js';
 
 // Configure Google Auth Provider with new OAuth Client ID
 const provider = new GoogleAuthProvider();
@@ -18,9 +9,7 @@ provider.setCustomParameters({
   'client_id': '851025174814-utovpv2c926sj52bcmk8oice5eh33pfm.apps.googleusercontent.com'
 });
 
-const firebaseApp = initializeApp(firebaseConfig);
-const auth = getAuth(firebaseApp);
-const firestore = getFirestore(firebaseApp);
+const firestore = db;
 
 let isAuthenticated = false;
 let currentUser = null;
