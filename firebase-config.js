@@ -5,7 +5,7 @@ import { getFirestore } from 'https://www.gstatic.com/firebasejs/10.8.0/firebase
 // Firebase configuration - REPLACE WITH YOUR NEW API KEY FROM FIREBASE CONSOLE
 // This key was exposed and must be replaced with a new one from Google Cloud Console
 const firebaseConfig = {
-  apiKey: "AIzaSyBVIHNdnmY_39KXY3PKlaJ88DotXS_D934",
+  apiKey: "AIzaSyByBwkCCoefhq9LKW0A3LavbArWxDYlNuI",
   authDomain: "weaponlog-private.firebaseapp.com",
   projectId: "weaponlog-private",
   storageBucket: "weaponlog-private.firebasestorage.app",
